@@ -1,1 +1,8 @@
 @import "tailwindcss";
+
+:root {
+  --color-brand-primary: #2563eb; /* Trustworthy Blue */
+  --color-brand-secondary: #f59e0b; /* "Action" Amber for deliveries */
+  --color-brand-accent: #10b981; /* Success Green */
+  --color-surface-900: #0f172a; /* Dark backgrounds for Admin sidebar */
+}
