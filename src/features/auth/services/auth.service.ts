@@ -1,30 +1,51 @@
+
 import { api } from "../../../services/axiosInstance";
-import {
+import type {
+  LoginPayload,
   LoginResponse,
-  RegisterResponse,
-  VerifyOtpRequest,
+  RegisterPayload,
+  VerifyOTPPayload,
+  ForgotPasswordPayload,
+  ResetPasswordPayload,
+  User,
 } from "../types/auth.types";
 
+const BASE = "/auth";
+
 export const authService = {
-  login: async (credentials: any) => {
-    const { data } = await api.post<LoginResponse>("/auth/login", credentials);
-    return data;
+  login: async (payload: LoginPayload): Promise<LoginResponse> => {
+    const res = await api.post(`${BASE}/login`, payload);
+    return res.data;
   },
 
-  register: async (userData: any) => {
-    const { data } = await api.post<RegisterResponse>(
-      "/auth/register",
-      userData,
-    );
-    return data;
+  register: async (payload: RegisterPayload): Promise<{ userId: string; email: string }> => {
+    const res = await api.post(`${BASE}/register`, payload);
+    return res.data;
   },
 
-  verifyOtp: async (payload: VerifyOtpRequest) => {
-    const { data } = await api.post("/auth/verify", payload);
-    return data;
+  verifyOTP: async (payload: VerifyOTPPayload): Promise<{ message: string }> => {
+    const res = await api.post(`${BASE}/verify`, payload);
+    return res.data;
   },
 
-  logout: async (userId: string) => {
-    await api.post("/auth/logout", { userId });
+  forgotPassword: async (payload: ForgotPasswordPayload): Promise<void> => {
+    await api.post(`${BASE}/forgot-password`, payload);
+  },
+
+  resetPassword: async (payload: ResetPasswordPayload): Promise<void> => {
+    await api.post(`${BASE}/reset-password`, {
+      email: payload.email,
+      code: payload.code,
+      newPass: payload.newPassword,
+    });
+  },
+
+  logout: async (): Promise<void> => {
+    await api.post(`${BASE}/logout`);
+  },
+
+  refresh: async (refreshToken: string): Promise<{ accessToken: string }> => {
+    const res = await api.post(`${BASE}/refresh`, { refreshToken });
+    return res.data;
   },
 };

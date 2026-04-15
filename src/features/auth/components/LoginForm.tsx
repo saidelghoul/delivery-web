@@ -1,79 +1,146 @@
 import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-import { Input } from "../../../components/common/Input";
-import { Button } from "../../../components/common/Button";
-import { useNavigate } from "react-router-dom";
 
 export const LoginForm = () => {
+  const { login, loading, error, clearError } = useAuth();
+  const location = useLocation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login, isLoading, error } = useAuth();
-  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+
+  const verified = location.state?.verified;
+  const passwordReset = location.state?.passwordReset;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      const user = await login({ email, password });
-
-      switch (user.role) {
-        case "SYSTEM_ADMIN":
-          navigate("/admin/overview");
-          break;
-        case "DISPATCHER":
-          navigate("/fleet-management");
-          break;
-        case "DRIVER":
-          navigate("/my-routes");
-          break;
-        case "SELLER":
-          navigate("/inventory/shipments");
-          break;
-        case "CLIENT":
-          navigate("/track-my-package");
-          break;
-        default:
-          navigate("/dashboard");
-      }
-    } catch (err) {
-      // Error is already handled by the hook's 'error' state
-      console.error("Login failed:", err);
-    }
+    clearError();
+    await login({ email, password });
   };
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col gap-4 w-full max-w-md p-6 bg-white shadow-lg rounded-xl"
+      style={{ display: "flex", flexDirection: "column", gap: "20px" }}
     >
-      <h2 className="text-2xl font-bold text-center">Login to Delivery</h2>
-
-      {error && (
-        <div className="p-3 text-sm text-red-700 bg-red-100 rounded-lg">
-          {error}
+      {verified && (
+        <div className="auth-success">
+          ✅ Email verified! You can now log in.
         </div>
       )}
+      {passwordReset && (
+        <div className="auth-success">
+          ✅ Password updated successfully. Please log in.
+        </div>
+      )}
+      {error && <div className="auth-error">⚠️ {error}</div>}
 
-      <Input
-        label="Email Address"
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="name@company.com"
-        required
-      />
+      <div>
+        <label className="auth-label">Email address</label>
+        <input
+          className="auth-input"
+          type="email"
+          placeholder="you@example.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          autoComplete="email"
+        />
+      </div>
 
-      <Input
-        label="Password"
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="••••••••"
-        required
-      />
+      <div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: "6px",
+          }}
+        >
+          <label className="auth-label" style={{ margin: 0 }}>
+            Password
+          </label>
+          <Link to="/forgot-password" className="auth-link">
+            Forgot password?
+          </Link>
+        </div>
+        <div style={{ position: "relative" }}>
+          <input
+            className="auth-input"
+            type={showPassword ? "text" : "password"}
+            placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            style={{ paddingRight: "48px" }}
+            autoComplete="current-password"
+          />
+          <button
+            type="button"
+            className="password-toggle"
+            onClick={() => setShowPassword(!showPassword)}
+            tabIndex={-1}
+          >
+            {showPassword ? (
+              <svg
+                width="18"
+                height="18"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18"
+                />
+              </svg>
+            ) : (
+              <svg
+                width="18"
+                height="18"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                />
+              </svg>
+            )}
+          </button>
+        </div>
+      </div>
 
-      <Button type="submit" isLoading={isLoading}>
-        Sign In
-      </Button>
+      <button className="auth-btn" type="submit" disabled={loading}>
+        {loading ? (
+          <>
+            <span className="spinner" />
+            Signing in...
+          </>
+        ) : (
+          "Sign in"
+        )}
+      </button>
+
+      <div className="auth-divider">or</div>
+
+      <p style={{ textAlign: "center", fontSize: "14px", color: "#64748B" }}>
+        Don't have an account?{" "}
+        <Link to="/register" className="auth-link">
+          Create one
+        </Link>
+      </p>
     </form>
   );
 };
