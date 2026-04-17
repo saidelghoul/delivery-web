@@ -2,11 +2,11 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ProtectedRoute } from "./layouts/ProtectedRoute";
 
 // Auth Pages
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/Registerpage";
-import VerifyOTPPage from "./pages/Verifyotppage";
-import ForgotPasswordPage from "./pages/Forgotpasswordpage";
-import ResetPasswordPage from "./pages/Resetpasswordpage";
+import LoginPage from "./pages/auth//LoginPage";
+import RegisterPage from "./pages/auth//Registerpage";
+import VerifyOTPPage from "./pages/auth//Verifyotppage";
+import ForgotPasswordPage from "./pages/auth//Forgotpasswordpage";
+import ResetPasswordPage from "./pages/auth/Resetpasswordpage";
 
 export default function App() {
   return (
