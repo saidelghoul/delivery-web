@@ -1,62 +1,77 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ProtectedRoute } from "./layouts/ProtectedRoute";
+import { MainLayout } from "./pages/layouts/MainLayout";
 
-// Auth Pages
-import LoginPage from "./pages/auth//LoginPage";
-import RegisterPage from "./pages/auth//Registerpage";
-import VerifyOTPPage from "./pages/auth//Verifyotppage";
-import ForgotPasswordPage from "./pages/auth//Forgotpasswordpage";
-import ResetPasswordPage from "./pages/auth/Resetpasswordpage";
+// Public pages
+import LandingPage from "./pages/public/Landingpage";
+
+// Auth pages
+import LoginPage from "./pages/auth/LoginPage";
+import RegisterPage from "./pages/auth/RegisterPage";
+import VerifyOTPPage from "./pages/auth/VerifyOTPPage";
+import ForgotPasswordPage from "./pages/auth/Forgotpasswordpage";
+import ResetPasswordPage from "./pages/auth/ResetPasswordPage";
+
+// App pages
+import DashboardPage from "./pages/core/DashboardPage";
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* --- PUBLIC AUTH ROUTES --- */}
+
+        {/* ── PUBLIC ── */}
+        <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route path="/unauthorized" element={<div>You don't have access to this page.</div>} />
 
-        <Route
-          path="/unauthorized"
-          element={<div>You don't have access to this page.</div>}
-        />
-
-        {/* --- AUTHENTICATED ROUTES (General) --- */}
+        {/* ── AUTHENTICATED (no layout — forced steps) ── */}
         <Route element={<ProtectedRoute />}>
-          {/* Forced steps — accessible before full auth */}
           <Route path="/verify-otp" element={<VerifyOTPPage />} />
-          <Route
-            path="/change-password"
-            element={<div>Please Change Your Password</div>}
-          />
-
-          {/* Default dashboard */}
-          <Route path="/dashboard" element={<div>General Dashboard</div>} />
+          <Route path="/change-password" element={<div>Change Password Page</div>} />
         </Route>
 
-        {/* --- ROLE-SPECIFIC ROUTES --- */}
-        <Route
-          element={<ProtectedRoute allowedRoles={["DISPATCHER", "SYSTEM_ADMIN"]} />}
-        >
-          <Route path="/fleet-management" element={<div>Dispatcher Control Panel</div>} />
-        </Route>
+        {/* ── AUTHENTICATED (with MainLayout) ── */}
+        <Route element={<ProtectedRoute />}>
+          <Route element={<MainLayout />}>
 
-        <Route element={<ProtectedRoute allowedRoles={["DRIVER"]} />}>
-          <Route path="/my-routes" element={<div>Driver Delivery List</div>} />
-        </Route>
+            {/* All roles */}
+            <Route path="/dashboard" element={<DashboardPage />} />
 
-        <Route element={<ProtectedRoute allowedRoles={["SELLER"]} />}>
-          <Route path="/inventory/shipments" element={<div>Seller Shipment Portal</div>} />
-        </Route>
+            {/* Admin + Dispatcher */}
+            <Route element={<ProtectedRoute allowedRoles={["DISPATCHER", "SYSTEM_ADMIN"]} />}>
+              <Route path="/fleet-management" element={<div>Fleet Management</div>} />
+            </Route>
 
-        <Route element={<ProtectedRoute allowedRoles={["CLIENT"]} />}>
-          <Route path="/track-my-package" element={<div>Client Tracking View</div>} />
+            {/* Admin only */}
+            <Route element={<ProtectedRoute allowedRoles={["SYSTEM_ADMIN"]} />}>
+              <Route path="/workers" element={<div>Workers Management</div>} />
+            </Route>
+
+            {/* Driver only */}
+            <Route element={<ProtectedRoute allowedRoles={["DRIVER"]} />}>
+              <Route path="/my-routes" element={<div>My Routes</div>} />
+            </Route>
+
+            {/* Seller only */}
+            <Route element={<ProtectedRoute allowedRoles={["SELLER"]} />}>
+              <Route path="/inventory/shipments" element={<div>Shipments</div>} />
+            </Route>
+
+            {/* Client only */}
+            <Route element={<ProtectedRoute allowedRoles={["CLIENT"]} />}>
+              <Route path="/track-my-package" element={<div>Track My Package</div>} />
+            </Route>
+
+          </Route>
         </Route>
 
         {/* Fallback */}
-        <Route path="*" element={<Navigate to="/login" replace />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+
       </Routes>
     </BrowserRouter>
   );
