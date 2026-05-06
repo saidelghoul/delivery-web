@@ -1,6 +1,6 @@
 // src/pages/ForgotPasswordPage.tsx
-import { AuthLayout } from "../features/auth/components/AuthLayout";
-import { ForgotPasswordForm } from "../features/auth/components/ForgotPasswordForm";
+import { AuthLayout } from "../../features/auth/components/AuthLayout";
+import { ForgotPasswordForm } from "../../features/auth/components/ForgotPasswordForm";
 
 export default function ForgotPasswordPage() {
   return (
