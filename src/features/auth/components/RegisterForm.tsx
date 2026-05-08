@@ -1,9 +1,8 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
-import type { UserRole } from "../types/auth.types";
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
 
-type RegisterableRole = "CLIENT" | "SELLER" | "SYSTEM_ADMIN";
+type RegisterableRole = 'CLIENT' | 'SELLER' | 'SYSTEM_ADMIN';
 
 const ROLES: {
   value: RegisterableRole;
@@ -11,28 +10,28 @@ const ROLES: {
   desc: string;
   icon: string;
 }[] = [
-  { value: "CLIENT", label: "Client", desc: "Track your packages", icon: "👤" },
+  { value: 'CLIENT', label: 'Client', desc: 'Track your packages', icon: '👤' },
   {
-    value: "SELLER",
-    label: "Seller / Provider",
-    desc: "Manage your shipments",
-    icon: "🏪",
+    value: 'SELLER',
+    label: 'Seller / Provider',
+    desc: 'Manage your shipments',
+    icon: '🏪',
   },
   {
-    value: "SYSTEM_ADMIN",
-    label: "Admin",
-    desc: "Manage a delivery company",
-    icon: "🏢",
+    value: 'SYSTEM_ADMIN',
+    label: 'Admin',
+    desc: 'Manage a delivery company',
+    icon: '🏢',
   },
 ];
 
 export const RegisterForm = () => {
   const { register, loading, error, clearError } = useAuth();
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [role, setRole] = useState<RegisterableRole>("CLIENT");
+  const [role, setRole] = useState<RegisterableRole>('CLIENT');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,51 +40,46 @@ export const RegisterForm = () => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      style={{ display: "flex", flexDirection: "column", gap: "18px" }}
-    >
+    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
       {error && <div className="auth-error">⚠️ {error}</div>}
 
       {/* Role selector */}
       <div>
         <label className="auth-label">I am a...</label>
-        <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
           {ROLES.map((r) => (
             <div
               key={r.value}
-              className={`role-card ${role === r.value ? "selected" : ""}`}
+              className={`role-card ${role === r.value ? 'selected' : ''}`}
               onClick={() => {
                 setRole(r.value);
                 clearError();
               }}
             >
-              <span style={{ fontSize: "22px" }}>{r.icon}</span>
+              <span style={{ fontSize: '22px' }}>{r.icon}</span>
               <div>
                 <div
                   style={{
-                    fontWeight: "700",
-                    fontSize: "14px",
-                    color: "#0F172A",
+                    fontWeight: '700',
+                    fontSize: '14px',
+                    color: '#0F172A',
                   }}
                 >
                   {r.label}
                 </div>
-                <div style={{ fontSize: "12px", color: "#64748B" }}>
-                  {r.desc}
-                </div>
+                <div style={{ fontSize: '12px', color: '#64748B' }}>{r.desc}</div>
               </div>
-              <div style={{ marginLeft: "auto" }}>
+              <div style={{ marginLeft: 'auto' }}>
                 <div
                   style={{
-                    width: "18px",
-                    height: "18px",
-                    borderRadius: "50%",
-                    border: `2px solid ${role === r.value ? "#1D4ED8" : "#CBD5E1"}`,
-                    background: role === r.value ? "#1D4ED8" : "transparent",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
+                    width: '18px',
+                    height: '18px',
+                    borderRadius: '50%',
+                    border: `2px solid ${role === r.value ? '#1D4ED8' : '#CBD5E1'}`,
+                    background: role === r.value ? '#1D4ED8' : 'transparent',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
                     flexShrink: 0,
                   }}
                 >
@@ -135,16 +129,16 @@ export const RegisterForm = () => {
 
       <div>
         <label className="auth-label">Password</label>
-        <div style={{ position: "relative" }}>
+        <div style={{ position: 'relative' }}>
           <input
             className="auth-input"
-            type={showPassword ? "text" : "password"}
+            type={showPassword ? 'text' : 'password'}
             placeholder="Create a strong password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
             minLength={8}
-            style={{ paddingRight: "48px" }}
+            style={{ paddingRight: '48px' }}
             autoComplete="new-password"
           />
           <button
@@ -154,13 +148,7 @@ export const RegisterForm = () => {
             tabIndex={-1}
           >
             {showPassword ? (
-              <svg
-                width="18"
-                height="18"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
+              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -169,13 +157,7 @@ export const RegisterForm = () => {
                 />
               </svg>
             ) : (
-              <svg
-                width="18"
-                height="18"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
+              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -192,9 +174,7 @@ export const RegisterForm = () => {
             )}
           </button>
         </div>
-        <p style={{ fontSize: "12px", color: "#94A3B8", marginTop: "6px" }}>
-          Minimum 8 characters
-        </p>
+        <p style={{ fontSize: '12px', color: '#94A3B8', marginTop: '6px' }}>Minimum 8 characters</p>
       </div>
 
       <button className="auth-btn" type="submit" disabled={loading}>
@@ -204,12 +184,12 @@ export const RegisterForm = () => {
             Creating account...
           </>
         ) : (
-          "Create account"
+          'Create account'
         )}
       </button>
 
-      <p style={{ textAlign: "center", fontSize: "14px", color: "#64748B" }}>
-        Already have an account?{" "}
+      <p style={{ textAlign: 'center', fontSize: '14px', color: '#64748B' }}>
+        Already have an account?{' '}
         <Link to="/login" className="auth-link">
           Sign in
         </Link>
