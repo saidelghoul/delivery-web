@@ -1,5 +1,5 @@
-import React from "react";
-import { COLORS } from "../../../constants/colors";
+import React from 'react';
+import { COLORS } from '../../../constants/colors';
 
 interface AuthLayoutProps {
   children: React.ReactNode;
@@ -16,27 +16,38 @@ export const AuthLayout = ({ children, title, subtitle }: AuthLayoutProps) => {
           <div style={styles.logo}>
             <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
               <rect width="36" height="36" rx="10" fill="white" fillOpacity="0.15" />
-              <path d="M8 14l10-6 10 6v8l-10 6-10-6v-8z" stroke="white" strokeWidth="2" strokeLinejoin="round" />
-              <path d="M18 8v16M8 14l10 6 10-6" stroke="white" strokeWidth="2" strokeLinejoin="round" />
+              <path
+                d="M8 14l10-6 10 6v8l-10 6-10-6v-8z"
+                stroke="white"
+                strokeWidth="2"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M18 8v16M8 14l10 6 10-6"
+                stroke="white"
+                strokeWidth="2"
+                strokeLinejoin="round"
+              />
             </svg>
             <span style={styles.logoText}>SwiftDeliver</span>
           </div>
 
           <div style={styles.panelContent}>
             <h2 style={styles.panelHeading}>
-              Delivery management,<br />
+              Delivery management,
+              <br />
               <span style={styles.panelHeadingAccent}>reimagined.</span>
             </h2>
             <p style={styles.panelDesc}>
-              A unified platform for delivery companies, sellers, and clients — 
-              from first shipment to final mile.
+              A unified platform for delivery companies, sellers, and clients — from first shipment
+              to final mile.
             </p>
 
             <div style={styles.featureList}>
               {[
-                { icon: "📦", label: "Real-time package tracking" },
-                { icon: "🚚", label: "Fleet & driver management" },
-                { icon: "📊", label: "Shipment analytics dashboard" },
+                { icon: '📦', label: 'Real-time package tracking' },
+                { icon: '🚚', label: 'Fleet & driver management' },
+                { icon: '📊', label: 'Shipment analytics dashboard' },
               ].map((f) => (
                 <div key={f.label} style={styles.featureItem}>
                   <span style={styles.featureIcon}>{f.icon}</span>
@@ -69,138 +80,138 @@ export const AuthLayout = ({ children, title, subtitle }: AuthLayoutProps) => {
 // --- Inline styles ---
 const styles: Record<string, React.CSSProperties> = {
   root: {
-    display: "flex",
-    minHeight: "100vh",
+    display: 'flex',
+    minHeight: '100vh',
     fontFamily: "'DM Sans', 'Segoe UI', sans-serif",
     backgroundColor: COLORS.background,
   },
   panel: {
-    width: "42%",
-    minWidth: "380px",
+    width: '42%',
+    minWidth: '380px',
     background: `linear-gradient(145deg, ${COLORS.primary} 0%, ${COLORS.primaryDark} 60%, #0F172A 100%)`,
-    position: "relative",
-    overflow: "hidden",
-    display: "flex",
-    flexDirection: "column",
+    position: 'relative',
+    overflow: 'hidden',
+    display: 'flex',
+    flexDirection: 'column',
   },
   panelInner: {
-    display: "flex",
-    flexDirection: "column",
-    height: "100%",
-    padding: "40px 48px",
-    position: "relative",
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+    padding: '40px 48px',
+    position: 'relative',
     zIndex: 2,
   },
   logo: {
-    display: "flex",
-    alignItems: "center",
-    gap: "12px",
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
   },
   logoText: {
     color: COLORS.text.inverse,
-    fontSize: "22px",
-    fontWeight: "700",
-    letterSpacing: "-0.4px",
+    fontSize: '22px',
+    fontWeight: '700',
+    letterSpacing: '-0.4px',
   },
   panelContent: {
     flex: 1,
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    paddingBottom: "60px",
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    paddingBottom: '60px',
   },
   panelHeading: {
     color: COLORS.text.inverse,
-    fontSize: "36px",
-    fontWeight: "800",
-    lineHeight: "1.2",
-    letterSpacing: "-0.8px",
-    marginBottom: "20px",
+    fontSize: '36px',
+    fontWeight: '800',
+    lineHeight: '1.2',
+    letterSpacing: '-0.8px',
+    marginBottom: '20px',
   },
   panelHeadingAccent: {
     color: COLORS.primaryMuted,
   },
   panelDesc: {
-    color: "rgba(255,255,255,0.65)",
-    fontSize: "15px",
-    lineHeight: "1.7",
-    marginBottom: "40px",
-    maxWidth: "320px",
+    color: 'rgba(255,255,255,0.65)',
+    fontSize: '15px',
+    lineHeight: '1.7',
+    marginBottom: '40px',
+    maxWidth: '320px',
   },
   featureList: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "14px",
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '14px',
   },
   featureItem: {
-    display: "flex",
-    alignItems: "center",
-    gap: "14px",
-    background: "rgba(255,255,255,0.08)",
-    borderRadius: "12px",
-    padding: "12px 18px",
-    backdropFilter: "blur(10px)",
-    border: "1px solid rgba(255,255,255,0.10)",
+    display: 'flex',
+    alignItems: 'center',
+    gap: '14px',
+    background: 'rgba(255,255,255,0.08)',
+    borderRadius: '12px',
+    padding: '12px 18px',
+    backdropFilter: 'blur(10px)',
+    border: '1px solid rgba(255,255,255,0.10)',
   },
   featureIcon: {
-    fontSize: "20px",
+    fontSize: '20px',
   },
   featureLabel: {
-    color: "rgba(255,255,255,0.85)",
-    fontSize: "14px",
-    fontWeight: "500",
+    color: 'rgba(255,255,255,0.85)',
+    fontSize: '14px',
+    fontWeight: '500',
   },
   decorCircle1: {
-    position: "absolute",
-    width: "400px",
-    height: "400px",
-    borderRadius: "50%",
-    border: "1px solid rgba(255,255,255,0.06)",
-    bottom: "-100px",
-    right: "-100px",
+    position: 'absolute',
+    width: '400px',
+    height: '400px',
+    borderRadius: '50%',
+    border: '1px solid rgba(255,255,255,0.06)',
+    bottom: '-100px',
+    right: '-100px',
     zIndex: 1,
   },
   decorCircle2: {
-    position: "absolute",
-    width: "600px",
-    height: "600px",
-    borderRadius: "50%",
-    border: "1px solid rgba(255,255,255,0.04)",
-    bottom: "-200px",
-    right: "-200px",
+    position: 'absolute',
+    width: '600px',
+    height: '600px',
+    borderRadius: '50%',
+    border: '1px solid rgba(255,255,255,0.04)',
+    bottom: '-200px',
+    right: '-200px',
     zIndex: 1,
   },
   formSide: {
     flex: 1,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: "40px 24px",
-    overflowY: "auto",
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '40px 24px',
+    overflowY: 'auto',
   },
   formContainer: {
-    width: "100%",
-    maxWidth: "440px",
+    width: '100%',
+    maxWidth: '440px',
   },
   formHeader: {
-    marginBottom: "32px",
+    marginBottom: '32px',
   },
   formTitle: {
-    fontSize: "28px",
-    fontWeight: "800",
+    fontSize: '28px',
+    fontWeight: '800',
     color: COLORS.text.main,
-    letterSpacing: "-0.6px",
-    marginBottom: "6px",
+    letterSpacing: '-0.6px',
+    marginBottom: '6px',
   },
   formSubtitle: {
-    fontSize: "15px",
+    fontSize: '15px',
     color: COLORS.text.muted,
-    lineHeight: "1.6",
+    lineHeight: '1.6',
   },
 };
 
 // Inject responsive CSS + Google Font
-const styleTag = document.createElement("style");
+const styleTag = document.createElement('style');
 styleTag.innerHTML = `
   @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap');
   

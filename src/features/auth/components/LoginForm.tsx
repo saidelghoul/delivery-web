@@ -1,12 +1,12 @@
-import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
+import { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
 
 export const LoginForm = () => {
   const { login, loading, error, clearError } = useAuth();
   const location = useLocation();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
   const verified = location.state?.verified;
@@ -19,19 +19,10 @@ export const LoginForm = () => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      style={{ display: "flex", flexDirection: "column", gap: "20px" }}
-    >
-      {verified && (
-        <div className="auth-success">
-          ✅ Email verified! You can now log in.
-        </div>
-      )}
+    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      {verified && <div className="auth-success">✅ Email verified! You can now log in.</div>}
       {passwordReset && (
-        <div className="auth-success">
-          ✅ Password updated successfully. Please log in.
-        </div>
+        <div className="auth-success">✅ Password updated successfully. Please log in.</div>
       )}
       {error && <div className="auth-error">⚠️ {error}</div>}
 
@@ -51,10 +42,10 @@ export const LoginForm = () => {
       <div>
         <div
           style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginBottom: "6px",
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '6px',
           }}
         >
           <label className="auth-label" style={{ margin: 0 }}>
@@ -64,15 +55,15 @@ export const LoginForm = () => {
             Forgot password?
           </Link>
         </div>
-        <div style={{ position: "relative" }}>
+        <div style={{ position: 'relative' }}>
           <input
             className="auth-input"
-            type={showPassword ? "text" : "password"}
+            type={showPassword ? 'text' : 'password'}
             placeholder="Enter your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            style={{ paddingRight: "48px" }}
+            style={{ paddingRight: '48px' }}
             autoComplete="current-password"
           />
           <button
@@ -82,13 +73,7 @@ export const LoginForm = () => {
             tabIndex={-1}
           >
             {showPassword ? (
-              <svg
-                width="18"
-                height="18"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
+              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -97,13 +82,7 @@ export const LoginForm = () => {
                 />
               </svg>
             ) : (
-              <svg
-                width="18"
-                height="18"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
+              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -129,14 +108,14 @@ export const LoginForm = () => {
             Signing in...
           </>
         ) : (
-          "Sign in"
+          'Sign in'
         )}
       </button>
 
       <div className="auth-divider">or</div>
 
-      <p style={{ textAlign: "center", fontSize: "14px", color: "#64748B" }}>
-        Don't have an account?{" "}
+      <p style={{ textAlign: 'center', fontSize: '14px', color: '#64748B' }}>
+        Don't have an account?{' '}
         <Link to="/register" className="auth-link">
           Create one
         </Link>

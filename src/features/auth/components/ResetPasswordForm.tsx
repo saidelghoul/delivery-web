@@ -1,18 +1,18 @@
-import { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
+import { useState, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
 
 export const ResetPasswordForm = () => {
   const { resetPassword, loading, error, clearError } = useAuth();
-  const [otp, setOtp] = useState<string[]>(Array(6).fill(""));
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [otp, setOtp] = useState<string[]>(Array(6).fill(''));
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [showNew, setShowNew] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
-  const [matchError, setMatchError] = useState("");
+  const [matchError, setMatchError] = useState('');
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
-  const email = sessionStorage.getItem("reset_email") || "";
+  const email = sessionStorage.getItem('reset_email') || '';
 
   useEffect(() => {
     inputRefs.current[0]?.focus();
@@ -27,24 +27,18 @@ export const ResetPasswordForm = () => {
     if (value && index < 5) inputRefs.current[index + 1]?.focus();
   };
 
-  const handleKeyDown = (
-    index: number,
-    e: React.KeyboardEvent<HTMLInputElement>,
-  ) => {
-    if (e.key === "Backspace" && !otp[index] && index > 0) {
+  const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Backspace' && !otp[index] && index > 0) {
       inputRefs.current[index - 1]?.focus();
     }
   };
 
   const handlePaste = (e: React.ClipboardEvent) => {
     e.preventDefault();
-    const pasted = e.clipboardData
-      .getData("text")
-      .replace(/\D/g, "")
-      .slice(0, 6);
+    const pasted = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6);
     if (pasted) {
-      const newOtp = Array(6).fill("");
-      pasted.split("").forEach((ch, i) => {
+      const newOtp = Array(6).fill('');
+      pasted.split('').forEach((ch, i) => {
         newOtp[i] = ch;
       });
       setOtp(newOtp);
@@ -54,28 +48,22 @@ export const ResetPasswordForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setMatchError("");
+    setMatchError('');
     clearError();
     if (newPassword !== confirmPassword) {
-      setMatchError("Passwords do not match.");
+      setMatchError('Passwords do not match.');
       return;
     }
     if (newPassword.length < 8) {
-      setMatchError("Password must be at least 8 characters.");
+      setMatchError('Password must be at least 8 characters.');
       return;
     }
-    await resetPassword({ email, code: otp.join(""), newPassword });
+    await resetPassword({ email, code: otp.join(''), newPassword });
   };
 
   const EyeIcon = ({ show }: { show: boolean }) =>
     show ? (
-      <svg
-        width="18"
-        height="18"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
+      <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -84,13 +72,7 @@ export const ResetPasswordForm = () => {
         />
       </svg>
     ) : (
-      <svg
-        width="18"
-        height="18"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
+      <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -107,10 +89,7 @@ export const ResetPasswordForm = () => {
     );
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      style={{ display: "flex", flexDirection: "column", gap: "20px" }}
-    >
+    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
       {error && <div className="auth-error">⚠️ {error}</div>}
       {matchError && <div className="auth-error">⚠️ {matchError}</div>}
 
@@ -118,9 +97,9 @@ export const ResetPasswordForm = () => {
         <label
           className="auth-label"
           style={{
-            textAlign: "center",
-            display: "block",
-            marginBottom: "14px",
+            textAlign: 'center',
+            display: 'block',
+            marginBottom: '14px',
           }}
         >
           Enter the 6-digit code we sent you
@@ -132,7 +111,7 @@ export const ResetPasswordForm = () => {
               ref={(el) => {
                 inputRefs.current[i] = el;
               }}
-              className={`otp-box ${digit ? "filled" : ""}`}
+              className={`otp-box ${digit ? 'filled' : ''}`}
               type="text"
               inputMode="numeric"
               maxLength={1}
@@ -146,18 +125,18 @@ export const ResetPasswordForm = () => {
 
       <div>
         <label className="auth-label">New password</label>
-        <div style={{ position: "relative" }}>
+        <div style={{ position: 'relative' }}>
           <input
             className="auth-input"
-            type={showNew ? "text" : "password"}
+            type={showNew ? 'text' : 'password'}
             placeholder="Create a new password"
             value={newPassword}
             onChange={(e) => {
               setNewPassword(e.target.value);
-              setMatchError("");
+              setMatchError('');
             }}
             required
-            style={{ paddingRight: "48px" }}
+            style={{ paddingRight: '48px' }}
             autoComplete="new-password"
           />
           <button
@@ -173,18 +152,18 @@ export const ResetPasswordForm = () => {
 
       <div>
         <label className="auth-label">Confirm new password</label>
-        <div style={{ position: "relative" }}>
+        <div style={{ position: 'relative' }}>
           <input
             className="auth-input"
-            type={showConfirm ? "text" : "password"}
+            type={showConfirm ? 'text' : 'password'}
             placeholder="Repeat your password"
             value={confirmPassword}
             onChange={(e) => {
               setConfirmPassword(e.target.value);
-              setMatchError("");
+              setMatchError('');
             }}
             required
-            style={{ paddingRight: "48px" }}
+            style={{ paddingRight: '48px' }}
             autoComplete="new-password"
           />
           <button
@@ -196,27 +175,21 @@ export const ResetPasswordForm = () => {
             <EyeIcon show={showConfirm} />
           </button>
         </div>
-        <p style={{ fontSize: "12px", color: "#94A3B8", marginTop: "6px" }}>
-          Minimum 8 characters
-        </p>
+        <p style={{ fontSize: '12px', color: '#94A3B8', marginTop: '6px' }}>Minimum 8 characters</p>
       </div>
 
-      <button
-        className="auth-btn"
-        type="submit"
-        disabled={loading || otp.join("").length !== 6}
-      >
+      <button className="auth-btn" type="submit" disabled={loading || otp.join('').length !== 6}>
         {loading ? (
           <>
             <span className="spinner" />
             Resetting password...
           </>
         ) : (
-          "Reset password"
+          'Reset password'
         )}
       </button>
 
-      <p style={{ textAlign: "center", fontSize: "14px", color: "#64748B" }}>
+      <p style={{ textAlign: 'center', fontSize: '14px', color: '#64748B' }}>
         <Link to="/login" className="auth-link">
           ← Back to login
         </Link>
