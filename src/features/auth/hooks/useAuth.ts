@@ -9,6 +9,7 @@ import type {
   ForgotPasswordPayload,
   ResetPasswordPayload,
 } from '../types/auth.types';
+import { logger } from '../../../utils/logger';
 
 const extractMessage = (error: unknown): string => {
   if (error && typeof error === 'object' && 'response' in error) {
@@ -56,8 +57,7 @@ export const useAuth = () => {
     setError(null);
     try {
       const data = await authService.register(payload);
-      console.log('REGISTER RESPONSE:', data);
-
+      logger.info('REGISTER RESPONSE:', data);
       // Store userId for OTP page
       sessionStorage.setItem('pending_verification_userId', data.userId);
       sessionStorage.setItem('pending_verification_email', payload.email);
