@@ -35,7 +35,7 @@ export const COLORS = {
     link: '#1D4ED8',
   },
 
-  // Roles (for badges / selectors)
+  // Roles (for badge / selectors)
   roles: {
     CLIENT: '#6366F1',
     SELLER: '#F59E0B',
