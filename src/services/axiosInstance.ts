@@ -1,12 +1,12 @@
-import axios from "axios";
-import { useAuthStore } from "../store/useAuthStore";
+import axios from 'axios';
+import { useAuthStore } from '../store/useAuthStore';
 
 // Change this to your actual backend URL
 const BASE_URL = import.meta.env.VITE_API_URL;
 export const api = axios.create({
   baseURL: BASE_URL,
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   },
 });
 

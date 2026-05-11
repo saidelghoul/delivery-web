@@ -1,9 +1,4 @@
-export type UserRole =
-  | "SYSTEM_ADMIN"
-  | "DISPATCHER"
-  | "DRIVER"
-  | "SELLER"
-  | "CLIENT";
+export type UserRole = 'SYSTEM_ADMIN' | 'DISPATCHER' | 'DRIVER' | 'SELLER' | 'CLIENT';
 
 export interface User {
   id: string;

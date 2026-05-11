@@ -1,5 +1,4 @@
-
-import { api } from "../../../services/axiosInstance";
+import { api } from '../../../services/axiosInstance';
 import type {
   LoginPayload,
   LoginResponse,
@@ -7,10 +6,9 @@ import type {
   VerifyOTPPayload,
   ForgotPasswordPayload,
   ResetPasswordPayload,
-  User,
-} from "../types/auth.types";
+} from '../types/auth.types';
 
-const BASE = "/auth";
+const BASE = '/auth';
 
 export const authService = {
   login: async (payload: LoginPayload): Promise<LoginResponse> => {

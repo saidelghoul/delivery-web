@@ -1,9 +1,4 @@
-export type UserRole =
-  | "SYSTEM_ADMIN"
-  | "DISPATCHER"
-  | "DRIVER"
-  | "SELLER"
-  | "CLIENT";
+export type UserRole = 'SYSTEM_ADMIN' | 'DISPATCHER' | 'DRIVER' | 'SELLER' | 'CLIENT';
 
 export interface User {
   id: string;
@@ -31,7 +26,7 @@ export interface RegisterPayload {
   email: string;
   password: string;
   fullName: string;
-  role: "SYSTEM_ADMIN" | "SELLER" | "CLIENT"; // Only self-registerable roles
+  role: 'SYSTEM_ADMIN' | 'SELLER' | 'CLIENT'; // Only self-registerable roles
 }
 
 export interface VerifyOTPPayload {

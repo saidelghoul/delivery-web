@@ -1,6 +1,6 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
-import type { User, AuthState } from "../types/auth";
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+import type { User, AuthState } from '../types/auth';
 
 interface AuthActions {
   setAuth: (user: User, accessToken: string, refreshToken: string) => void;
@@ -30,7 +30,7 @@ export const useAuthStore = create<AuthState & AuthActions>()(
         }),
     }),
     {
-      name: "delivery-auth-storage", // Key in LocalStorage
+      name: 'delivery-auth-storage', // Key in LocalStorage
     },
   ),
 );

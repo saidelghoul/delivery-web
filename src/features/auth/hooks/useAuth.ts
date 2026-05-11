@@ -1,22 +1,23 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { authService } from "../services/auth.service";
-import { useAuthStore } from "../../../store/useAuthStore";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { authService } from '../services/auth.service';
+import { useAuthStore } from '../../../store/useAuthStore';
 import type {
   LoginPayload,
   RegisterPayload,
   VerifyOTPPayload,
   ForgotPasswordPayload,
   ResetPasswordPayload,
-} from "../types/auth.types";
+} from '../types/auth.types';
+import { logger } from '../../../utils/logger';
 
 const extractMessage = (error: unknown): string => {
-  if (error && typeof error === "object" && "response" in error) {
+  if (error && typeof error === 'object' && 'response' in error) {
     const axiosError = error as { response?: { data?: { message?: string } } };
-    return axiosError.response?.data?.message || "Something went wrong";
+    return axiosError.response?.data?.message || 'Something went wrong';
   }
   if (error instanceof Error) return error.message;
-  return "Something went wrong";
+  return 'Something went wrong';
 };
 
 export const useAuth = () => {
@@ -37,11 +38,11 @@ export const useAuth = () => {
 
       // Route based on state
       if (data.user.needsPasswordChange) {
-        navigate("/change-password");
+        navigate('/change-password');
       } else if (!data.user.isVerified) {
-        navigate("/verify-otp");
+        navigate('/verify-otp');
       } else {
-        navigate("/dashboard");
+        navigate('/dashboard');
       }
     } catch (err) {
       setError(extractMessage(err));
@@ -56,12 +57,11 @@ export const useAuth = () => {
     setError(null);
     try {
       const data = await authService.register(payload);
-          console.log("REGISTER RESPONSE:", data);
-
+      logger.info('REGISTER RESPONSE:', data);
       // Store userId for OTP page
-      sessionStorage.setItem("pending_verification_userId", data.userId);
-      sessionStorage.setItem("pending_verification_email", payload.email);
-      navigate("/verify-otp");
+      sessionStorage.setItem('pending_verification_userId', data.userId);
+      sessionStorage.setItem('pending_verification_email', payload.email);
+      navigate('/verify-otp');
     } catch (err) {
       setError(extractMessage(err));
     } finally {
@@ -75,9 +75,9 @@ export const useAuth = () => {
     setError(null);
     try {
       await authService.verifyOTP(payload);
-      sessionStorage.removeItem("pending_verification_userId");
-      sessionStorage.removeItem("pending_verification_email");
-      navigate("/login", { state: { verified: true } });
+      sessionStorage.removeItem('pending_verification_userId');
+      sessionStorage.removeItem('pending_verification_email');
+      navigate('/login', { state: { verified: true } });
     } catch (err) {
       setError(extractMessage(err));
     } finally {
@@ -91,8 +91,8 @@ export const useAuth = () => {
     setError(null);
     try {
       await authService.forgotPassword(payload);
-      sessionStorage.setItem("reset_email", payload.email);
-      navigate("/reset-password");
+      sessionStorage.setItem('reset_email', payload.email);
+      navigate('/reset-password');
     } catch (err) {
       setError(extractMessage(err));
     } finally {
@@ -106,8 +106,8 @@ export const useAuth = () => {
     setError(null);
     try {
       await authService.resetPassword(payload);
-      sessionStorage.removeItem("reset_email");
-      navigate("/login", { state: { passwordReset: true } });
+      sessionStorage.removeItem('reset_email');
+      navigate('/login', { state: { passwordReset: true } });
     } catch (err) {
       setError(extractMessage(err));
     } finally {
@@ -123,7 +123,7 @@ export const useAuth = () => {
       // Silent fail — still logout locally
     } finally {
       storeLogout();
-      navigate("/login");
+      navigate('/login');
     }
   };
 

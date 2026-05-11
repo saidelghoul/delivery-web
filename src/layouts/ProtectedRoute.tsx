@@ -1,6 +1,6 @@
-import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { useAuthStore } from "../store/useAuthStore";
-import { UserRole } from "../types/auth";
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
+import { useAuthStore } from '../store/useAuthStore';
+import { UserRole } from '../types/auth';
 
 interface Props {
   allowedRoles?: UserRole[];
@@ -16,12 +16,12 @@ export const ProtectedRoute = ({ allowedRoles }: Props) => {
   }
 
   // 2. Worker logic: Must change password first
-  if (user.needsPasswordChange && location.pathname !== "/change-password") {
+  if (user.needsPasswordChange && location.pathname !== '/change-password') {
     return <Navigate to="/change-password" replace />;
   }
 
   // 3. Verification logic: Must verify OTP first
-  if (!user.isVerified && location.pathname !== "/verify-otp") {
+  if (!user.isVerified && location.pathname !== '/verify-otp') {
     return <Navigate to="/verify-otp" replace />;
   }
 
