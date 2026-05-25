@@ -99,6 +99,7 @@ jobs:
             -Dsonar.projectKey=saidelghoul_delivery-web
             -Dsonar.organization=saidelghoul
             -Dsonar.sources=src
+            -Dsonar.exclusions=**/node_modules/**,**/dist/**
 
   deploy:
     name: Deploy to Vercel
