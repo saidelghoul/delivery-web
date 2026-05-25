@@ -78,16 +78,7 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-      - name: Debug project structure
-        # debugging start
-        run: |
-          echo "=== Root files ==="
-          ls -la
-          echo "=== src folder ==="
-          ls -la src/ || echo "NO SRC FOLDER FOUND"
-          echo "=== sonar properties ==="
-          cat sonar-project.properties || echo "NO SONAR PROPERTIES FILE FOUND"
-      # debugging end
+
       - name: SonarCloud Scan
         uses: SonarSource/sonarqube-scan-action@b16d2601a6b948e2fb26f3772276581f31daa7cd
         env:
