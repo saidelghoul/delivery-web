@@ -89,7 +89,7 @@ jobs:
           cat sonar-project.properties || echo "NO SONAR PROPERTIES FILE FOUND"
       # debugging end
       - name: SonarCloud Scan
-        uses: SonarSource/sonarqube-scan-action@master
+        uses: SonarSource/sonarqube-scan-action@b16d2601a6b948e2fb26f3772276581f31daa7cd
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
