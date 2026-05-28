@@ -80,18 +80,17 @@ jobs:
         run: npm ci
 
       - name: SonarCloud Scan
-        # nosonar
         uses: SonarSource/sonarqube-scan-action@v7.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: https://sonarcloud.io
-        with:
-          args: >
-            -Dsonar.projectKey=saidelghoul_delivery-web
-            -Dsonar.organization=saidelghoul
-            -Dsonar.sources=src
-            -Dsonar.exclusions=**/node_modules/**,**/dist/**
+        # with:
+        # args: >
+        #   -Dsonar.projectKey=saidelghoul_delivery-web
+        #   -Dsonar.organization=saidelghoul
+        #   -Dsonar.sources=src
+        #   -Dsonar.exclusions=**/node_modules/**,**/dist/**
 
   deploy:
     name: Deploy to Vercel
